@@ -1,14 +1,7 @@
 import { createApp } from 'vue';
-import axios from 'axios';
 import App from './App.vue';
 import store from './store';
+import router from './router';
+import './index.css';
 
-const test = async () => {
-  const response = await axios.get('http://localhost:5000/api/ingredients');
-  const json = await response.data;
-  console.log(json);
-};
-
-test();
-
-createApp(App).use(store).mount('#app');
+createApp(App).use(store).use(router).mount('#app');
