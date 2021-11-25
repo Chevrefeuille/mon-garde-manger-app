@@ -17,14 +17,20 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 import groupBy from 'lodash/groupBy';
+import IngredientService from '../services/ingredient.service';
+import Ingredient from '../types/ingredient.type';
+import { AxiosResponse } from 'axios';
 
 export default defineComponent({
   name: 'Home',
   setup() {
-    interface Ingredient {
-      name: string;
-      type: string;
-    }
+    IngredientService.getAll()
+      .then((response: AxiosResponse) => {
+        console.log(response.data);
+      })
+      .catch((e: Error) => {
+        console.log(e);
+      });
 
     const ingredients = ref([
       { type: 'seasonings', name: 'salt' },
