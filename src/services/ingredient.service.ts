@@ -4,7 +4,7 @@ import { AxiosResponse } from 'axios';
 
 class IngredientService {
   getAll(): Promise<AxiosResponse<Ingredient[]>> {
-    return http.get<Array<Ingredient>>('/ingredients');
+    return http.get<Ingredient[]>('/ingredients');
   }
 
   get(id: string): Promise<AxiosResponse<Ingredient>> {
@@ -19,8 +19,8 @@ class IngredientService {
     return http.put<Ingredient>(`/ingredients/${id}`, data);
   }
 
-  delete(id: string): Promise<AxiosResponse> {
-    return http.delete<string>(`/ingredients/${id}`);
+  delete(id: string): Promise<AxiosResponse<Ingredient>> {
+    return http.delete<Ingredient>(`/ingredients/${id}`);
   }
 }
 

@@ -23,19 +23,22 @@ import Ingredient from '../types/ingredient.type';
 export default defineComponent({
   name: 'Home',
   setup() {
-    const getIngredients = async (): Promise<Ingredient[]> => {
-      const allIngredients = await IngredientService.getAll();
-      return allIngredients.data;
-    };
-    console.log(getIngredients());
+    const ingredients = ref<Ingredient[]>([]);
 
-    const ingredients = ref([
-      { type: 'seasonings', name: 'salt' },
-      { type: 'seasonings', name: 'pepper' },
-      { type: 'seasonings', name: 'cinnamon' },
-      { type: 'dry', name: 'flour' },
-      { type: 'dry', name: 'sugar' },
-    ]);
+    const getIngredients = async (): Promise<void> => {
+      const res = await IngredientService.getAll();
+      ingredients.value = res.data;
+    };
+
+    getIngredients();
+
+    // const ingredients = ref([
+    //   { type: 'seasonings', name: 'salt' },
+    //   { type: 'seasonings', name: 'pepper' },
+    //   { type: 'seasonings', name: 'cinnamon' },
+    //   { type: 'dry', name: 'flour' },
+    //   { type: 'dry', name: 'sugar' },
+    // ]);
 
     const ingredientsGroupByType = groupBy(
       ingredients.value,
