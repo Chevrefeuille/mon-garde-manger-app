@@ -3,7 +3,7 @@
   <div id="my-ingredients" class="flex flex-row">
     <div
       v-for="(ingredient, i) in ingredients"
-      v-bind:key="i"
+      :key="i"
       class="bg-teal-200 rounded-md m-2 p-2 shadow-md"
     >
       {{ ingredient }}
@@ -19,18 +19,15 @@ import { defineComponent, ref } from 'vue';
 import groupBy from 'lodash/groupBy';
 import IngredientService from '../services/ingredient.service';
 import Ingredient from '../types/ingredient.type';
-import { AxiosResponse } from 'axios';
 
 export default defineComponent({
   name: 'Home',
   setup() {
-    IngredientService.getAll()
-      .then((response: AxiosResponse) => {
-        console.log(response.data);
-      })
-      .catch((e: Error) => {
-        console.log(e);
-      });
+    const getIngredients = async (): Promise<Ingredient[]> => {
+      const allIngredients = await IngredientService.getAll();
+      return allIngredients.data;
+    };
+    console.log(getIngredients());
 
     const ingredients = ref([
       { type: 'seasonings', name: 'salt' },
