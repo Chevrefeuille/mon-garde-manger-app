@@ -20,4 +20,5 @@ module.exports = {
     "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
     "@typescript-eslint/explicit-function-return-type": "error"
   },
+  ignorePatterns: ['tailwind.config.js'],
 };

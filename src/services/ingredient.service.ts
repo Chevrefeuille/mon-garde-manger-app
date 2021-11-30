@@ -1,4 +1,4 @@
-import http from '../http-common';
+import http from '../utils/http-common';
 import Ingredient from '../types/ingredient.type';
 import { AxiosResponse } from 'axios';
 
