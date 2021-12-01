@@ -1,6 +1,5 @@
 import http from '../utils/http-common';
-import { SessionUser, User, NewUser, UserInfo } from '../types/auth.type';
-import { AxiosResponse } from 'axios';
+import { SessionUser, NewUser, UserInfo } from '../types/auth.type';
 
 class AuthService {
   async login(data: SessionUser): Promise<UserInfo> {

@@ -115,16 +115,23 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { useUserStore } from '../stores/user.store';
+import { useRouter } from 'vue-router';
 
 export default defineComponent({
   name: 'Header',
   setup() {
     const userStore = useUserStore();
+    const router = useRouter();
+
+    const logout = (): void => {
+      userStore.logout();
+      router.push('/login');
+    };
     return {
       status: userStore.status,
       login: userStore.login,
       signin: userStore.signin,
-      logout: userStore.logout,
+      logout: logout,
     };
   },
 });

@@ -78,8 +78,12 @@ export default defineComponent({
     const userStore = useUserStore();
 
     function login(): void {
-      userStore.login({ email: email.value, password: password.value });
-      router.push('/profile');
+      userStore
+        .login({ email: email.value, password: password.value })
+        .then(() => {
+          router.push('/profile');
+        })
+        .catch((error: any) => console.log(error));
     }
 
     return {

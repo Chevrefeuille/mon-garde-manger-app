@@ -24,23 +24,17 @@ export const useUserStore = defineStore('user', {
     signin(user: NewUser): void {
       AuthService.signin(user);
     },
-    login(user: SessionUser): void {
-      AuthService.login(user).then(
-        (res) => {
-          console.log(res);
+    login(user: SessionUser): Promise<void> {
+      return AuthService.login(user)
+        .then((res) => {
           this.updateUser(res);
           this.updateStatus(true);
-        },
-        (error) => {
+          return Promise.resolve();
+        })
+        .catch((error) => {
           this.updateUser(<UserInfo>{});
-          const message =
-            (error.response &&
-              error.response.data &&
-              error.response.data.message) ||
-            error.message ||
-            error.toString();
-        },
-      );
+          return Promise.reject(error);
+        });
     },
     logout(): void {
       AuthService.logout();
