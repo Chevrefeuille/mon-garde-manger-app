@@ -51,7 +51,7 @@
         class="text-red-500"
         >{{ passwordConfirmationError }}</span
       >
-      <button class="form-input" @submit="signin">Log in</button>
+      <button class="form-input" @submit="signin">Sign in</button>
     </form>
   </div>
 </template>
@@ -61,6 +61,8 @@ import { defineComponent } from 'vue';
 import { useUserStore } from '../stores/user.store';
 import { useForm, useField } from 'vee-validate';
 import { toFormValidator } from '@vee-validate/zod';
+import { useRouter } from 'vue-router';
+
 import * as zod from 'zod';
 
 export default defineComponent({
@@ -115,16 +117,22 @@ export default defineComponent({
       handleBlur: passwordConfirmationHandleBlur,
     } = useField<string>('passwordConfirmation');
 
+    const router = useRouter();
     const userStore = useUserStore();
 
-    function signin(): void {
-      userStore.signin({
-        name: name.value,
-        email: email.value,
-        password: password.value,
-        passwordConfirmation: passwordConfirmation.value,
-      });
-    }
+    const signin = (): void => {
+      userStore
+        .signin({
+          name: name.value,
+          email: email.value,
+          password: password.value,
+          passwordConfirmation: passwordConfirmation.value,
+        })
+        .then(() => {
+          router.push('/login');
+        })
+        .catch((error: any) => console.log(error));
+    };
 
     return {
       name,

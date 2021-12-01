@@ -77,14 +77,14 @@ export default defineComponent({
     const router = useRouter();
     const userStore = useUserStore();
 
-    function login(): void {
+    const login = (): void => {
       userStore
         .login({ email: email.value, password: password.value })
         .then(() => {
           router.push('/profile');
         })
         .catch((error: any) => console.log(error));
-    }
+    };
 
     return {
       email,

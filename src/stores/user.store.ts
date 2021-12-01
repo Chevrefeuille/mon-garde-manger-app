@@ -21,8 +21,8 @@ export const useUserStore = defineStore('user', {
     updateUser(user: UserInfo) {
       this.user = user;
     },
-    signin(user: NewUser): void {
-      AuthService.signin(user);
+    signin(user: NewUser): Promise<UserInfo> {
+      return AuthService.signin(user);
     },
     login(user: SessionUser): Promise<void> {
       return AuthService.login(user)

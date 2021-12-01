@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div v-if="user" class="container">
     <header>
       <h3>
         <strong>{{ user.name }}</strong> Profile
@@ -22,13 +22,24 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, onMounted } from 'vue';
 import { useUserStore } from '../stores/user.store';
+import { useRouter } from 'vue-router';
 
 export default defineComponent({
   name: 'Profile',
   setup() {
     const userStore = useUserStore();
+    const router = useRouter();
+
+    const checkLoggedIn = (): void => {
+      if (!userStore.user) {
+        router.push('/login');
+      }
+    };
+
+    onMounted(checkLoggedIn);
+
     return { user: userStore.user };
   },
 });

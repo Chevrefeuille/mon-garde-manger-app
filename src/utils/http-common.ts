@@ -19,7 +19,6 @@ instance.interceptors.response.use(
     return response;
   },
   function (error) {
-    console.log(router);
     if (error.response.status === 403) {
       router.push('/login');
     }
