@@ -1,25 +1,25 @@
 import { defineStore } from 'pinia';
 import AuthService from '../services/auth.service';
-import { JWT, SessionUser, NewUser } from '@/types/auth.type';
+import { SessionUser, NewUser, UserInfo } from '@/types/auth.type';
 
-const storedTokens = localStorage.getItem('tokens');
+const storedUser = localStorage.getItem('user');
 
 export const useUserStore = defineStore('user', {
   state: () => {
     return {
-      tokens: storedTokens ? JSON.parse(storedTokens) : null,
-      status: storedTokens ? { loggedIn: true } : { loggedIn: false },
+      user: storedUser ? JSON.parse(storedUser) : null,
+      status: storedUser ? { loggedIn: true } : { loggedIn: false },
     };
   },
   getters: {
     isLoggedIn: (state) => state.status.loggedIn,
   },
   actions: {
-    updateTokens(tokens: JWT) {
-      this.tokens = tokens;
-    },
     updateStatus(status: boolean) {
       this.status.loggedIn = status;
+    },
+    updateUser(user: UserInfo) {
+      this.user = user;
     },
     signin(user: NewUser): void {
       AuthService.signin(user);
@@ -28,24 +28,23 @@ export const useUserStore = defineStore('user', {
       AuthService.login(user).then(
         (res) => {
           console.log(res);
-          this.updateTokens(res.data);
+          this.updateUser(res);
           this.updateStatus(true);
         },
         (error) => {
-          this.updateTokens(<JWT>{});
+          this.updateUser(<UserInfo>{});
           const message =
             (error.response &&
               error.response.data &&
               error.response.data.message) ||
             error.message ||
             error.toString();
-          console.log(message);
         },
       );
     },
     logout(): void {
       AuthService.logout();
-      this.updateTokens(<JWT>{});
+      this.updateUser(<UserInfo>{});
       this.updateStatus(false);
     },
   },

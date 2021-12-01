@@ -37,6 +37,8 @@ import { defineComponent } from 'vue';
 import { useUserStore } from '../stores/user.store';
 import { useForm, useField } from 'vee-validate';
 import { toFormValidator } from '@vee-validate/zod';
+import { useRouter } from 'vue-router';
+
 import * as zod from 'zod';
 
 export default defineComponent({
@@ -72,10 +74,12 @@ export default defineComponent({
       handleBlur: passwordHandleBlur,
     } = useField<string>('password');
 
+    const router = useRouter();
     const userStore = useUserStore();
 
     function login(): void {
       userStore.login({ email: email.value, password: password.value });
+      router.push('/profile');
     }
 
     return {

@@ -3,15 +3,18 @@ export interface SessionUser {
   email: string;
 }
 
-export interface User extends SessionUser {
+export interface User {
   name: string;
+  email: string;
 }
 
 export interface NewUser extends User {
+  password: string;
   passwordConfirmation: string;
 }
 
-export interface JWT {
+export interface UserInfo extends User {
   accessToken: string;
   refreshToken: string;
+  _id: string;
 }

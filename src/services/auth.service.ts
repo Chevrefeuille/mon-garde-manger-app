@@ -1,23 +1,37 @@
 import http from '../utils/http-common';
-import { SessionUser, User, NewUser, JWT } from '../types/auth.type';
+import { SessionUser, User, NewUser, UserInfo } from '../types/auth.type';
 import { AxiosResponse } from 'axios';
 
 class AuthService {
-  async login(data: SessionUser): Promise<AxiosResponse<JWT>> {
-    const response = await http.post<JWT>('/sessions', data);
+  async login(data: SessionUser): Promise<UserInfo> {
+    const response = await http.post('/sessions', data);
     if (response.data.accessToken) {
-      console.log(JSON.stringify(response.data));
-      localStorage.setItem('tokens', JSON.stringify(response.data));
+      localStorage.setItem('user', JSON.stringify(response.data));
     }
-    return response;
+    const userInfo = {
+      accessToken: response.data.accessToken,
+      refreshToken: response.data.refreshToken,
+      email: response.data.email,
+      name: response.data.name,
+      _id: response.data._id,
+    };
+    return userInfo;
   }
 
   logout(): void {
     localStorage.removeItem('user');
   }
 
-  signin(data: NewUser): Promise<AxiosResponse<User>> {
-    return http.post<User>('/users', data);
+  async signin(data: NewUser): Promise<UserInfo> {
+    const response = await http.post('/users', data);
+    const user = {
+      name: response.data.name,
+      _id: response.data._id,
+      email: response.data.email,
+      accessToken: '',
+      refreshToken: '',
+    };
+    return user;
   }
 }
 
