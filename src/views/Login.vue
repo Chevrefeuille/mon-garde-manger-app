@@ -81,7 +81,7 @@ export default defineComponent({
       userStore
         .login({ email: email.value, password: password.value })
         .then(() => {
-          router.push('/home');
+          router.push('/');
         })
         .catch((error: any) => console.log(error));
     };
