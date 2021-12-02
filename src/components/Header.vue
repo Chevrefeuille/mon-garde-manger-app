@@ -4,7 +4,7 @@
     class="flex items-center justify-between flex-wrap bg-teal-500 p-6 mb-4"
   >
     <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
-      <div class="text-sm lg:flex-grow">
+      <div class="lg:flex-grow">
         <router-link
           to="/"
           class="
@@ -16,7 +16,7 @@
             mr-4
           "
         >
-          Home
+          Mon Garde Manger
         </router-link>
         <router-link
           to="/about"
