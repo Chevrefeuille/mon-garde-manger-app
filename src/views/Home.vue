@@ -15,7 +15,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref, onMounted } from 'vue';
+import { useUserStore } from '../stores/user.store';
+import { useRouter } from 'vue-router';
 import groupBy from 'lodash/groupBy';
 import IngredientService from '../services/ingredient.service';
 import Ingredient from '../types/ingredient.type';
@@ -32,21 +34,24 @@ export default defineComponent({
 
     getIngredients();
 
-    // const ingredients = ref([
-    //   { type: 'seasonings', name: 'salt' },
-    //   { type: 'seasonings', name: 'pepper' },
-    //   { type: 'seasonings', name: 'cinnamon' },
-    //   { type: 'dry', name: 'flour' },
-    //   { type: 'dry', name: 'sugar' },
-    // ]);
-
     const ingredientsGroupByType = groupBy(
       ingredients.value,
       (ingredient: Ingredient) => ingredient.type,
     );
     console.log(ingredientsGroupByType);
 
-    return { ingredients };
+    const userStore = useUserStore();
+    const router = useRouter();
+
+    const checkLoggedIn = (): void => {
+      if (!userStore.user) {
+        router.push('/login');
+      }
+    };
+
+    onMounted(checkLoggedIn);
+
+    return { ingredients, user: userStore.user };
   },
 });
 </script>
