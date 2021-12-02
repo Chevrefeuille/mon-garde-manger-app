@@ -2,7 +2,8 @@
   <div v-if="user" class="container">
     <header>
       <h3>
-        <strong>{{ user.name }}</strong> Profile
+        <strong>{{ user.name }}</strong
+        >'s profile
       </h3>
     </header>
     <p>
