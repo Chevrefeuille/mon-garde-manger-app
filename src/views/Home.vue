@@ -19,26 +19,20 @@ import { defineComponent, ref, onMounted } from 'vue';
 import { useUserStore } from '../stores/user.store';
 import { useRouter } from 'vue-router';
 import groupBy from 'lodash/groupBy';
-import IngredientService from '../services/ingredient.service';
-import Ingredient from '../types/ingredient.type';
+import IngredientInstanceService from '../services/ingredientInstance.service';
+import IngredientInstance from '../types/ingredientInstance.type';
 
 export default defineComponent({
   name: 'Home',
   setup() {
-    const ingredients = ref<Ingredient[]>([]);
+    const ingredients = ref<IngredientInstance[]>([]);
 
     const getIngredients = async (): Promise<void> => {
-      const res = await IngredientService.getAll();
+      const res = await IngredientInstanceService.getAll();
       ingredients.value = res.data;
     };
 
     getIngredients();
-
-    const ingredientsGroupByType = groupBy(
-      ingredients.value,
-      (ingredient: Ingredient) => ingredient.type,
-    );
-    console.log(ingredientsGroupByType);
 
     const userStore = useUserStore();
     const router = useRouter();
