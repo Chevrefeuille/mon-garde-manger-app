@@ -1,9 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
-
+import { useRouteGuard } from '@/auth/useRouterGuard';
 import Home from '../views/Home.vue';
 import About from '../views/About.vue';
-import Signin from '../views/Signin.vue';
-import Login from '../views/Login.vue';
 import Profile from '../views/Profile.vue';
 
 const routes = [
@@ -18,19 +16,10 @@ const routes = [
     component: About,
   },
   {
-    path: '/signin',
-    name: 'Signin',
-    component: Signin,
-  },
-  {
-    path: '/login',
-    name: 'login',
-    component: Login,
-  },
-  {
     path: '/profile',
     name: 'profile',
     component: Profile,
+    beforeEnter: useRouteGuard,
   },
 ];
 const router = createRouter({

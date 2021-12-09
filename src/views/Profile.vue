@@ -7,41 +7,23 @@
       </h3>
     </header>
     <p>
-      <strong>Token:</strong>
-      {{ user.accessToken.substring(0, 20) }} ...
-      {{ user.accessToken.substr(user.accessToken.length - 20) }}
-    </p>
-    <p>
-      <strong>Id:</strong>
-      {{ user._id }}
-    </p>
-    <p>
       <strong>Email:</strong>
       {{ user.email }}
     </p>
+    <img :src="user.picture" alt="User's profile picture" />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted } from 'vue';
-import { useUserStore } from '../stores/user.store';
-import { useRouter } from 'vue-router';
+import { defineComponent } from 'vue';
+import { useAuth } from '@/auth/useAuthService';
 
 export default defineComponent({
   name: 'Profile',
   setup() {
-    const userStore = useUserStore();
-    const router = useRouter();
+    const { user } = useAuth();
 
-    const checkLoggedIn = (): void => {
-      if (!userStore.user) {
-        router.push('/login');
-      }
-    };
-
-    onMounted(checkLoggedIn);
-
-    return { user: userStore.user };
+    return { user };
   },
 });
 </script>

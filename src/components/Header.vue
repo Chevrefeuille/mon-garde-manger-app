@@ -32,7 +32,7 @@
           About
         </router-link>
       </div>
-      <div v-if="status.loggedIn">
+      <div v-if="isAuthenticated && user">
         <router-link
           to="/profile"
           class="
@@ -61,15 +61,15 @@
             mt-4
             lg:mt-0
           "
-          href
-          @click.prevent="logout"
+          href="#"
+          @click.prevent="logoutAndRedirect"
         >
           Log out
         </a>
       </div>
-      <div v-if="!status.loggedIn">
-        <router-link
-          to="/login"
+      <div v-if="!isAuthenticated && !loading">
+        <a
+          href="#"
           class="
             inline-block
             text-sm
@@ -85,28 +85,10 @@
             lg:mt-0
             mr-4
           "
+          @click.prevent="login"
         >
           Log in
-        </router-link>
-        <router-link
-          to="/signin"
-          class="
-            inline-block
-            text-sm
-            px-4
-            py-2
-            leading-none
-            border
-            rounded
-            text-white
-            border-white
-            hover:border-transparent hover:text-teal-500 hover:bg-white
-            mt-4
-            lg:mt-0
-          "
-        >
-          Sign in
-        </router-link>
+        </a>
       </div>
     </div>
   </nav>
@@ -114,25 +96,24 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { useUserStore } from '../stores/user.store';
 import { useRouter } from 'vue-router';
+import { useAuth } from '@/auth/useAuthService';
 
 export default defineComponent({
   name: 'Header',
   setup() {
-    const userStore = useUserStore();
     const router = useRouter();
 
-    const logout = (): void => {
-      userStore.logout();
-      router.push('/login');
+    const { loginWithRedirect, logout, isAuthenticated, loading, user } =
+      useAuth();
+
+    const logoutAndRedirect = (): void => {
+      logout();
+      router.push({ path: '/' });
     };
-    return {
-      status: userStore.status,
-      login: userStore.login,
-      signin: userStore.signin,
-      logout: logout,
-    };
+    const login = (): void => loginWithRedirect();
+
+    return { login, logoutAndRedirect, isAuthenticated, loading, user };
   },
 });
 </script>

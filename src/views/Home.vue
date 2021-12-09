@@ -13,9 +13,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted } from 'vue';
-import { useUserStore } from '../stores/user.store';
-import { useRouter } from 'vue-router';
+import { defineComponent, ref } from 'vue';
 import IngredientInstanceService from '../services/ingredientInstance.service';
 import IngredientInstance from '../types/ingredientInstance.type';
 import IngredientInstanceCard from '../components/IngredientInstanceCard.vue';
@@ -35,18 +33,7 @@ export default defineComponent({
 
     getIngredients();
 
-    const userStore = useUserStore();
-    const router = useRouter();
-
-    const checkLoggedIn = (): void => {
-      if (!userStore.user) {
-        router.push('/login');
-      }
-    };
-
-    onMounted(checkLoggedIn);
-
-    return { ingredients, user: userStore.user };
+    return { ingredients, user: {} };
   },
 });
 </script>
