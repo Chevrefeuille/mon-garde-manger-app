@@ -21,6 +21,7 @@ export default defineComponent({
       initializeAuth({
         domain: process.env.VUE_APP_AUTH0_DOMAIN as string,
         client_id: process.env.VUE_APP_AUTH0_CLIENT_ID as string,
+        audience: process.env.VUE_APP_AUTH0_AUDIENCE as string,
         scope: 'openid profile email',
       }),
     );
