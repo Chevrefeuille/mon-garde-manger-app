@@ -1,13 +1,11 @@
 <template>
   <div class="bg-teal-200 rounded-md m-2 p-2">Search for your ingredient</div>
   <div id="my-ingredients" class="flex flex-row">
-    <div
+    <IngredientInstanceCard
       v-for="(ingredient, i) in ingredients"
       :key="i"
-      class="bg-teal-200 rounded-md m-2 p-2 shadow-md"
-    >
-      {{ ingredient }}
-    </div>
+      :ingredient-instance="ingredient"
+    />
     <div id="add-ingredient" class="bg-teal-200 rounded-md m-2 p-2 shadow-md">
       Add an ingredient
     </div>
@@ -18,12 +16,15 @@
 import { defineComponent, ref, onMounted } from 'vue';
 import { useUserStore } from '../stores/user.store';
 import { useRouter } from 'vue-router';
-import groupBy from 'lodash/groupBy';
 import IngredientInstanceService from '../services/ingredientInstance.service';
 import IngredientInstance from '../types/ingredientInstance.type';
+import IngredientInstanceCard from '../components/IngredientInstanceCard.vue';
 
 export default defineComponent({
   name: 'Home',
+  components: {
+    IngredientInstanceCard,
+  },
   setup() {
     const ingredients = ref<IngredientInstance[]>([]);
 
