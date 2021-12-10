@@ -9,13 +9,19 @@
           to="/"
           class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
         >
-          Mon Garde Manger
+          Home
         </router-link>
         <router-link
           to="/about"
           class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
         >
           About
+        </router-link>
+        <router-link
+          to="/pantry"
+          class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
+        >
+          Pantry
         </router-link>
       </div>
       <div v-if="isAuthenticated && user">
