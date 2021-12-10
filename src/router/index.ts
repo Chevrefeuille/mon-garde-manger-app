@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import { useRouteGuard } from '@/auth/useRouterGuard';
+import { useRouteGuard } from '../auth/useRouterGuard';
 import Home from '../views/Home.vue';
 import About from '../views/About.vue';
 import Profile from '../views/Profile.vue';

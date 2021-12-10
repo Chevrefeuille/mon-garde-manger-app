@@ -1,4 +1,4 @@
-import router from '@/router';
+import router from '../router';
 import createAuth0Client, {
   Auth0Client,
   Auth0ClientOptions,

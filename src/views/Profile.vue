@@ -16,7 +16,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { useAuth } from '@/auth/useAuthService';
+import { useAuth } from '../auth/useAuthService';
 
 export default defineComponent({
   name: 'Profile',

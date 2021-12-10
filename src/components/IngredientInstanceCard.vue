@@ -7,7 +7,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType, toRefs } from 'vue';
-import IngredientInstance from '@/types/ingredientInstance.type';
+import IngredientInstance from '../types/ingredientInstance.type';
 
 export default defineComponent({
   props: {

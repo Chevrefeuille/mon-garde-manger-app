@@ -1,5 +1,5 @@
 import { AxiosRequestHeaders } from 'axios';
-import { useAuth } from '@/auth/useAuthService';
+import { useAuth } from '../auth/useAuthService';
 
 export default async function getAuthHeader(): Promise<AxiosRequestHeaders> {
   const { getTokenSilently } = useAuth();
