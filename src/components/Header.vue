@@ -1,38 +1,41 @@
 <template>
   <nav
     id="header"
-    class="flex items-center justify-between flex-wrap bg-teal-500 p-6 mb-4"
+    class="flex items-center justify-between flex-wrap bg-lime-300 p-6 mb-4 shadow-md"
   >
+    <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
+      Pantry
+    </div>
     <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
       <div class="lg:flex-grow">
         <router-link
           to="/"
-          class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
+          class="block mt-4 lg:inline-block lg:mt-0 text-stone-800 hover:text-stone-400 mr-4"
         >
           Home
         </router-link>
         <router-link
           to="/about"
-          class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
+          class="block mt-4 lg:inline-block lg:mt-0 text-stone-800 hover:text-stone-400 mr-4"
         >
           About
         </router-link>
         <router-link
           to="/pantry"
-          class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
+          class="block mt-4 lg:inline-block lg:mt-0 text-stone-800 hover:text-stone-400 mr-4"
         >
-          Pantry
+          My pantry
         </router-link>
       </div>
       <div v-if="isAuthenticated && user">
         <router-link
           to="/profile"
-          class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
+          class="block mt-4 lg:inline-block lg:mt-0 text-stone-800 hover:text-stone-400 mr-4"
         >
           Profile
         </router-link>
         <a
-          class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0"
+          class="inline-block text-sm px-4 py-2 leading-none border rounded text-stone-800 border-stone-800 hover:border-transparent hover:text-stone-400 hover:bg-white mt-4 lg:mt-0"
           href="#"
           @click.prevent="logoutAndRedirect"
         >
@@ -42,7 +45,7 @@
       <div v-if="!isAuthenticated && !loading">
         <a
           href="#"
-          class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0 mr-4"
+          class="inline-block text-sm px-4 py-2 leading-none border rounded text-stone-800 border-stone-800 hover:border-transparent hover:text-stone-400 hover:bg-white mt-4 lg:mt-0 mr-4"
           @click.prevent="login"
         >
           Log in
