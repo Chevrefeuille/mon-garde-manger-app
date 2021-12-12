@@ -21,5 +21,5 @@ module.exports = {
     '@typescript-eslint/explicit-function-return-type': 'error',
     'vue/multi-word-component-names': 'off',
   },
-  ignorePatterns: ['tailwind.config.js'],
+  ignorePatterns: ['tailwind.config.js', 'apollo.config.js'],
 };

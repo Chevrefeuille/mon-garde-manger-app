@@ -1,39 +1,57 @@
 <template>
-  <div class="bg-teal-200 rounded-md m-2 p-2">Search for your ingredient</div>
-  <div id="my-ingredients" class="flex flex-row">
-    <IngredientInstanceCard
-      v-for="(ingredient, i) in ingredients"
-      :key="i"
-      :ingredient-instance="ingredient"
-    />
-    <div id="add-ingredient" class="bg-teal-200 rounded-md m-2 p-2 shadow-md">
-      Add an ingredient
+  <div class="flex justify-center">
+    <div class="flex flex-row bg-stone-200 rounded-md w-9/12 space-x-4 p-4">
+      <IngredientTypeCollection
+        v-for="(ingredientsCollection, type, index) in ingredientsGroupedByType"
+        :key="index"
+        :type="type"
+        :ingredients-collection="ingredientsCollection"
+      />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
-import IngredientInstanceService from '../services/ingredientInstance.service';
-import IngredientInstance from '../types/ingredientInstance.type';
-import IngredientInstanceCard from '../components/IngredientInstanceCard.vue';
+import { defineComponent, computed } from 'vue';
+import IngredientTypeCollection from '../components/IngredientTypeCollection.vue';
+import { useQuery, useResult } from '@vue/apollo-composable';
+import { groupBy } from 'lodash';
+import gql from 'graphql-tag';
 
 export default defineComponent({
   name: 'Pantry',
   components: {
-    IngredientInstanceCard,
+    IngredientTypeCollection,
   },
   setup() {
-    const ingredients = ref<IngredientInstance[]>([]);
+    // const ingredients = ref<IngredientInstance[]>([]);
 
-    const getIngredients = async (): Promise<void> => {
-      const res = await IngredientInstanceService.getAll();
-      ingredients.value = res.data;
-    };
+    const { result } = useQuery(gql`
+      query {
+        ingredient_instance(where: { user_id: { _eq: 4 } }) {
+          id
+          ingredient {
+            name
+            ingredient_type {
+              name
+            }
+          }
+          quantity
+          unit
+        }
+      }
+    `);
 
-    getIngredients();
+    const ingredients = useResult(result);
 
-    return { ingredients, user: {} };
+    const ingredientsGroupedByType = computed(() => {
+      return groupBy(
+        ingredients.value,
+        (ingredient) => ingredient.ingredient.ingredient_type.name,
+      );
+    });
+
+    return { ingredients, ingredientsGroupedByType };
   },
 });
 </script>
